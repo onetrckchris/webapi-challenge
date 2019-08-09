@@ -23,12 +23,24 @@ const choreExists = (req, res, next) => {
     }
 }
 
+let idNumber = 4;
+
 router.post('/', (req, res) => {
     const chore = req.body;
 
     if(chore.description && chore.assignedTo) {
-        chores.push(chore);
-        res.status(201).json(chore);
+        let newChore = {
+            id: idNumber,
+            description: chore.description,
+            assignedTo: chore.assignedTo,
+            notes: chore.notes,
+            completed: chore.completed || false
+        }
+
+        idNumber++;
+
+        chores.push(newChore);
+        res.status(201).json(newChore);
     } else {
         res.status(400).json({ error: "Please provide a description and assignedTo for the chore." });
     }
@@ -37,14 +49,14 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {
     const completed = req.query.completed;
 
+
     if(!completed) {
         res.status(200).json(chores);
-    } else if(completed === 'false') {
-        res.status(200).json(chores.filter(chore => chore.completed === false));
-    } else if(completed === 'true') {
-        res.status(200).json(chores.filter(chore => chore.completed === true));
     } else {
-        res.status(500).json({ error: "Server error when attempting to GET all chores." })
+        let newChores = chores.filter(chore => chore.completed === JSON.parse(completed))
+        newChores.length ? 
+            res.status(200).json(newChores) :
+            res.status(500).json({ error: "Server error when attempting to GET all chores." })
     }
 });
 

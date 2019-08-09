@@ -23,20 +23,20 @@ let people = [
 
 let chores = [
     {
-        id: 6,
+        id: 1,
         description: "Take out the trash",
         notes: "Only do it if they're full",
         assignedTo: 1,
         completed: true
     },
     {
-        id: 7,
+        id: 2,
         description: "Get oil change",
         assignedTo: 1,
         completed: false
     },
     {
-        id: 8,
+        id: 3,
         description: "Clean up the house",
         notes: "Make sure to do it well",
         assignedTo: 2,
